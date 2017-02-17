@@ -25,12 +25,17 @@ describe DockingStation do
   end
 
   it 'has a default capacity of 20 bikes' do
-    expect(subject.capacity).to eq 20
+    expect(DockingStation::CAPACITY).to eq 20
   end
 
   it 'releases a bike' do
     bike = subject.dock(Bike.new)
     expect(subject.release_bike).to eq bike
+  end
+
+  it 'allows user to set capacity' do
+    station = DockingStation.new(5)
+    expect(station.capacity).to eq 5
   end
 
 end
