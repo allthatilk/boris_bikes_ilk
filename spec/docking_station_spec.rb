@@ -6,7 +6,7 @@ describe DockingStation do
 
   it 'docks and shows the bike' do
     bike = subject.dock(bike) # This is us taking our bike to the docking station
-    expect(subject.bike).to eq bike # .bike is the same as our previous 'show_bike'
+    expect(subject.bikes[-1]).to eq bike # .bike is the same as our previous 'show_bike'
     # method but attr_reader uses the variable name instead. So this is showing us
     # our bike docked in the docking station, not someone else's bike.
   end
@@ -21,10 +21,16 @@ describe DockingStation do
   end
 
   it 'raises error if at capacity' do
-    bike = Bike.new
-    subject.dock(bike)
-    bike2 = Bike.new
-    expect{subject.dock(bike2)}.to raise_error("Too many bikes!")
+    expect{21.times { subject.dock(Bike.new)} }.to raise_error("Too many bikes!")
+  end
+
+  it 'has a default capacity of 20 bikes' do
+    expect(subject.capacity).to eq 20
+  end
+
+  it 'releases a bike' do
+    bike = subject.dock(Bike.new)
+    expect(subject.release_bike).to eq bike
   end
 
 end
